@@ -1,0 +1,99 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<title>时钟</title>
+	</head>
+	<body>
+		<canvas id="colock" width="500" height="500" style="background:#e5f7ff">
+			您的浏览器不支持canvas标签
+		</canvas>
+		<script>
+			var cs=document.getElementById("colock").getContext('2d');
+			function draw(){
+				cs.clearRect(0,0,500,500);
+				var now=new Date();
+				var sec=now.getSeconds();
+				var min=now.getMinutes();
+				var hour=now.getHours()+min/60;
+				hour=hour>12?hour-12:hous;
+				cs.beginPath();
+				cs.strokeStyle="#4169E1";
+				cs.lineWidth=10;
+				cs.arc(250,250,200,0,360,false);
+				cs.stroke();
+				cs.closePath();
+				for(var i=0;i<12;i++){
+				cs.save();
+				cs.translate(250,250);
+				cs.rotate(i*30*Math.PI/180);
+				cs.beginPath();
+				cs.strokeStyle="#000";
+				cs.lineWidth=7;
+				cs.moveTo(0,-170);
+				cs.lineTo(0,-190)
+				cs.stroke();
+				cs.closePath();
+				cs.restore();
+				}
+				for(var i=0;i<60;i++){
+				cs.save();
+				cs.translate(250,250);
+				cs.rotate(i*6*Math.PI/180);
+				cs.beginPath();
+				cs.strokeStyle="#000";
+				cs.lineWidth=5;
+				cs.moveTo(0,-180);
+				cs.lineTo(0,-190)
+				cs.stroke();
+				cs.closePath();
+				cs.restore();
+				}
+				//时针
+				cs.save();
+				cs.translate(250,250);
+				cs.rotate(hour*30*Math.PI/180);
+				cs.beginPath();
+				cs.strokeStyle="#000";
+				cs.lineWidth=7;
+				cs.moveTo(0,10);
+				cs.lineTo(0,-150)
+				cs.stroke();
+				cs.closePath();
+				cs.restore();
+				//分针
+				cs.save();
+				cs.translate(250,250);
+				cs.rotate(min*6*Math.PI/180);
+				cs.beginPath();
+				cs.strokeStyle="#000";
+				cs.lineWidth=5;
+				cs.moveTo(0,10);
+				cs.lineTo(0,-160)
+				cs.stroke();
+				cs.closePath();
+				cs.restore();
+				//秒针
+				cs.save();
+				cs.translate(250,250);
+				cs.rotate(sec*6*Math.PI/180);
+				cs.beginPath();
+				cs.strokeStyle="#ff3300";
+				cs.lineWidth=3;
+				cs.moveTo(0,10);
+				cs.lineTo(0,-170)
+				cs.stroke();
+				cs.closePath();
+				cs.restore();
+				//装饰
+				cs.beginPath();
+				cs.strokeStyle="#adad85";
+				cs.arc(250,250,4,0,360,false);
+				cs.stroke();
+				cs.closePath();
+				}
+				draw();
+				setInterval(draw,1000);
+		</script>
+	</body>
+	
+</html>
