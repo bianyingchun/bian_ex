@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>苹果系统文件倒影</title>
+</head>
+<style>
+*{padding:0;margin:0;}
+html{
+	height:100%;
+	}
+body{
+	height:100%;
+	margin:0;
+	background: #000;
+	}
+#box{
+	height:100%;
+	position: relative;
+	overflow:hidden;
+	-webkit-perspective:800px;
+	}
+#imgList{
+	position:absolute;
+	-webkit-transform-style: preserve-3d;
+	}
+img{
+	width:226px;
+	position:absolute;
+	bottom: 0;
+	-webkit-box-reflect:below 0 -webkit-linear-gradient(top,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%);
+	}
+</style>
+<body>
+	<div id="box">
+		<div id="imgList">
+			<img src="image/fpic1.jpg" alt="" style="">
+			<img src="image/fpic2.jpg" alt="" style="">
+			<img src="image/fpic3.jpg" alt="" style="">
+			<img src="image/fpic4.jpg" alt="" style="">
+			<img src="image/fpic5.jpg" alt="" style="">
+			<img src="image/fpic6.jpg" alt="" style="">
+			<img src="image/fpic7.jpg" alt="" style="">
+			<img src="image/fpic8.jpg" alt="" style="">
+			<img src="image/fpic9.jpg" alt="" style="">
+			<img src="image/fpic10.jpg" alt="" style="">
+			<img src="image/fpic11.jpg" alt="" style="">
+		</div>
+	</div>
+	<script type="text/javascript">
+	window.onload=function(){
+			var oDiv=document.getElementById("box");
+			var imgList=document.getElementById("imgList");
+			var img=imgList.getElementsByTagName("img");
+			var iInterval=80;
+			var ileft=-iInterval;
+			var iwidth=226;
+			var iHeight=0;
+			var iListLeft=0;
+			var istartinow=0;
+			for(var i=0;i<img.length;i++){				
+				ileft+=iInterval;
+				if(i<Math.floor(img.length/2)){					
+					img[i].style.left=ileft+'px';
+					img[i].style.width=iwidth+'px';
+					img[i].style.WebkitTransform='rotateY(45deg) translateZ(-100px)';
+				}
+				else if(i>Math.floor(img.length/2)){
+					img[i].style.left=ileft+'px';
+					img[i].style.width=iwidth+'px';
+					img[i].style.WebkitTransform='rotateY(-45deg)translateZ(-100px)';
+				}
+				else{
+					ileft+=iInterval;
+					img[i].style.left=ileft+'px';
+					img[i].style.width=iwidth+'px';
+					img[i].style.WebkitTransform='translateZ(200px)';
+					iListLeft=document.documentElement.clientWidth/2-(ileft+img[i].offsetWidth/2);
+					ileft+=iInterval;
+					istartinow=i;
+				}
+				iHeight=Math.max(iHeight,img[i].offsetHeight);
+				img[i].index=i;
+				img[i].onclick=function(){
+					var ileft=-(this.index-istartinow)*iInterval;
+					tab(img,iInterval,ileft,this.index)
+				}
+			}
+			imgList.style.height=iHeight+'px';
+			imgList.style.top=(document.documentElement.clientHeight-iHeight)/2+'px';
+			imgList.style.left=iListLeft+'px';
+		}
+		function tab(img,iInterval,ileft,inow){
+			    ileft-=iInterval;
+				for(var i=0;i<img.length;i++){
+				img[i].WebkitTranstion='1s all ease-in'
+				ileft+=iInterval;
+				if(i<inow){
+					img[i].style.left=ileft+'px';
+					img[i].style.WebkitTransform='rotateY(45deg) translateZ(-100px)';
+				}
+				else if(i>inow){
+					img[i].style.left=ileft+'px';
+					img[i].style.WebkitTransform='rotateY(-45deg)translateZ(-100px)';
+				}
+				else{
+					ileft+=iInterval;
+					img[i].style.left=ileft+'px';
+					img[i].style.WebkitTransform='translateZ(200px)';
+					ileft+=iInterval;
+				}
+				
+			}
+		}
+	</script>
+</body>
+</html>
